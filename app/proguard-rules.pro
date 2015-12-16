@@ -31,9 +31,15 @@
 -keep public class * extends android.content.ContentProvider
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
+-keep public class * extends android.support.design.widget.NavigationView
 -keep public class com.android.vending.licensing.ILicensingService
 #如果有引用v4包可以添加下面这行
 -keep public class * extends android.support.v4.app.Fragment
+#第三方包
+-keep  class pl.tajchert.**{*;}
+-keep  class com.**.**{*;}
+-keep  class org.**.**{*;}
+-keep  class android.support.**{*;}
 
 
 
@@ -177,9 +183,52 @@
 #–keepattributes Signature
 
 #移除log 测试了下没有用还是建议自己定义一个开关控制是否输出日志
-#-assumenosideeffects class android.util.Log {
-#    public static boolean isLoggable(java.lang.String, int);
-#    public static int v(...);
-#    public static int i(...);
-#    public static int w(...);
-#    public static int d(...);
+-assumenosideeffects class android.util.Log {
+    public static *** v(...);
+    public static *** i(...);
+    public static *** d(...);
+    public static *** w(...);
+    public static *** e(...);
+}
+-keepattributes *Annotation*
+#//使用注解需要添加
+-keep public class com.google.vending.licensing.ILicensingService
+-keep public class com.android.vending.licensing.ILicensingService
+
+# For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
+-keepclasseswithmembernames class * {
+
+    native <methods>;
+}
+
+# keep setters in Views so that animations can still work.
+# see http://proguard.sourceforge.net/manual/examples.html#beans
+-keepclassmembers public class * extends android.view.View {
+   void set*(***);
+   *** get*();
+}
+
+# We want to keep methods in Activity that could be used in the XML attribute onClick
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+#不混淆Parcelable和它的子类，还有Creator成员变量
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+#不混淆R类里及其所有内部static类中的所有static变量字段
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+# The support library contains references to newer platform versions.
+# Don't warn about those in case this app is linking against an older
+# platform version.  We know about them, and they are safe.
+-dontwarn android.support.**
+#//不提示兼容库的错误警告

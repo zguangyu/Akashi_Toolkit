@@ -44,7 +44,6 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
     private static SwipeRefreshLayout time_refresh_layout;
     private static SimpleAdapter listItemAdapter;
     ListView listview_update;
-
     static Handler mHandler = new Handler()
     {
         public void handleMessage(Message msg)
@@ -78,8 +77,64 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                listItem.clear();
+                listview_update=(ListView)findViewById(R.id.listview_update);
+                listview_update.setDivider(null);
+                listItemAdapter = new SimpleAdapter(Main.this, listItem,//数据源
+                        R.layout.list_item_card2,//ListItem的XML实现
+                        //动态数组
+                        new String[]{"ItemTitle", "Text"},
+                        //ImageItem的XML文件里面的两个TextView ID
+                        new int[]{R.id.title_1,R.id.subtitle_1}
+                );
+
+                listview_update.setAdapter(listItemAdapter);
+                listview_update.setLayoutAnimation(getListAnim());
+                listview_update.setAdapter(listItemAdapter);
+                getGameData();
+                time_refresh_layout = (SwipeRefreshLayout) findViewById(R.id.time_refresh_layout);
+                time_refresh_layout.setColorSchemeResources(
+                        android.R.color.holo_blue_bright,
+                        android.R.color.holo_orange_light,
+                        android.R.color.holo_green_light);
+                time_refresh_layout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        time_refresh_layout.setRefreshing(true);
+                    }
+                });
+
+
+
+                time_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+                    // SwipeRefreshLayout接管其包裹的ListView下拉事件。
+                    // 每一次对ListView的下拉动作，将触发SwipeRefreshLayout的onRefresh()。
+                    @Override
+                    public void onRefresh() {
+                        Log.e("主线程", "刷新启动");
+                        time_refresh_layout.setRefreshing(true);
+
+                        // 开始启动刷新...
+                        // 在这儿放耗时操作的 AsyncTask线程、后台Service等代码。
+                        getGameData();
+                        // 刷新完毕.
+
+                        // false，刷新完成，因此停止UI的刷新表现样式。
+                    }
+                });
+
+            }
+        });
+
+        thread.start();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -88,56 +143,8 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        listItem.clear();
-        listview_update=(ListView)findViewById(R.id.listview_update);
-        listview_update.setDivider(null);
-        listItemAdapter = new SimpleAdapter(Main.this, listItem,//数据源
-                R.layout.list_item_card2,//ListItem的XML实现
-                //动态数组
-                new String[]{"ItemTitle", "Text"},
-                //ImageItem的XML文件里面的两个TextView ID
-                new int[]{R.id.title_1,R.id.subtitle_1}
-        );
-
-        listview_update.setAdapter(listItemAdapter);
-        listview_update.setLayoutAnimation(getListAnim());
-        listview_update.setAdapter(listItemAdapter);
-        getGameData();
-        time_refresh_layout = (SwipeRefreshLayout) findViewById(R.id.time_refresh_layout);
-        time_refresh_layout.setColorSchemeResources(
-                android.R.color.holo_blue_bright,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_green_light);
-        time_refresh_layout.post(new Runnable() {
-            @Override
-            public void run() {
-                time_refresh_layout.setRefreshing(true);
-            }
-        });
-
-
-
-        time_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            // SwipeRefreshLayout接管其包裹的ListView下拉事件。
-            // 每一次对ListView的下拉动作，将触发SwipeRefreshLayout的onRefresh()。
-            @Override
-            public void onRefresh() {
-                Log.e("主线程", "刷新启动");
-                time_refresh_layout.setRefreshing(true);
-
-                // 开始启动刷新...
-                // 在这儿放耗时操作的 AsyncTask线程、后台Service等代码。
-                getGameData();
-                // 刷新完毕.
-
-                // false，刷新完成，因此停止UI的刷新表现样式。
-            }
-        });
-
-
     }
+
 
     private LayoutAnimationController getListAnim() {
         AnimationSet set = new AnimationSet(true);
@@ -194,44 +201,42 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.main) {
-        } else if (id == R.id.nav_1) {
-            Intent intent = new Intent(Main.this, page1.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_3) {
-            Intent intent = new Intent(Main.this, page3.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_4) {
-            Intent intent = new Intent(Main.this, page4.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_5) {
-            Intent intent = new Intent(Main.this, page5.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_6) {
-            Intent intent = new Intent(Main.this, page6.class);
-            startActivity(intent);
-            finish();
-        }else if (id == R.id.nav_info) {
-            Intent intent = new Intent(Main.this, Aboutapp.class);
-            startActivity(intent);
-        }else if (id == R.id.nav_setting) {
-            Intent intent = new Intent(Main.this, SettingsActivity.class);
-            startActivity(intent);
+        switch (id) {
+            case  R.id.main:;
+            case  R.id.nav_1:
+                    jump(page1.class); finish();break;
+            case  R.id.nav_3:
+                jump(page3.class); finish();break;
+            case  R.id.nav_4:
+                jump(page4.class); finish();break;
+            case  R.id.nav_5:
+                jump(page5.class); finish();break;
+            case  R.id.nav_6:
+                jump(page6.class); finish();break;
+            case  R.id.nav_info:
+                jump(Aboutapp.class);break;
+            case  R.id.nav_setting:
+                jump(SettingsActivity.class);break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+void jump(Class app){
+    Intent intent = new Intent(Main.this,app);
+    startActivity(intent);
 
+}
     public void getGameData() {
         try {
             //获取
+//            time_refresh_layout.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    time_refresh_layout.setRefreshing(true);
+//                }
+//            });
             listItem.clear();
             try {
                 JSON2.runnable.start();

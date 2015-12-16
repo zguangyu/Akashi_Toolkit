@@ -65,7 +65,7 @@ public class JSONUtil {
 
 
             try {
-                readParse("http://t.kcwiki.moe/?json=1&count=15");
+                readParse("http://t.kcwiki.moe/?json=1&count=30");
             } catch (Exception e) {
                 e.printStackTrace();
                 page1.mHandler.sendEmptyMessage(1);
@@ -93,7 +93,7 @@ public class JSONUtil {
 
                 //获取一个json数组
                 JSONArray array = jsonObject.getJSONArray("posts");
-                for(int i=0;i<15;i++){
+                for(int i=0;i<30;i++){
                     JSONTokener jsonTokener2 = new JSONTokener(array.getString(i));
                     JSONObject jsonObject1 = (JSONObject) jsonTokener2.nextValue();
                     HashMap<String, Object> map = new HashMap<String, Object>();

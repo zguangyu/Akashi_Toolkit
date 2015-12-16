@@ -43,9 +43,13 @@ public class JSON2 {
                 JSONObject jsonObject2 = jsonObject1.getJSONObject("text");
                 //获取一个json数组
                 Log.e("json数组", jsonObject2.getString("*"));
-
-                String str = jsonObject2.getString("*");
-                String result = str.substring(0, str.indexOf("<br"));
+                String result;
+                try{
+                    String str = jsonObject2.getString("*");
+                     result = str.substring(0, str.indexOf("<br"));
+                }catch  (Exception e) {
+                     result = jsonObject2.getString("*");
+                }
                 Log.e("json字符串截取", result);
 
                 HashMap<String, Object> map = new HashMap<String, Object>();

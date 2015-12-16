@@ -10,7 +10,7 @@
     <string name="titleA"><![CDATA[制空&带路]]></string>
     <string name="titleB">掉落查询</string>
     <string name="from">资料来源:<a href="http://zh.kcwiki.moe/">舰娘百科</a> </string>
-    <string name="about">作者:神楽坂南音, 信息来源:kcwiki舰娘百科\n图标:若叶厨, 软件提名:作者无敌AA \n感谢各位为广大Android早日用上wiki for kancolle Android版的所付出的努力</string>
+    <string name="about">作者:神楽坂南音, 信息来源:kcwiki舰娘百科\n图标:若叶厨, 软件提名:作者无敌AA \n感谢各位为广大Android用户早日用上wiki for kancolle Android版的所付出的努力\n该版本仅供预览，大部分内容暂未实现，效果可能不会是最终效果\n全部功能的版本将在2-3个月内完成，期间将不断有部分功能的版本更新，如果感觉没必要可以等待正式版</string>
     <string name="pref_ringtone_silent">Silent</string>
 
 
@@ -70,7 +70,7 @@
     <string name="pref_title_ringtone">Ringtone</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
-
+    <string name="about2">关于作者：\n作者仅是一个高职二年级的学生，Android全靠自学，目前因为学业压力只能用业余时间进行编写，如果有什么bug还请各位请体谅并与作者或@kcwiki舰娘百科官博娘反馈，感谢各位的支持</string>
 
 
 </resources>

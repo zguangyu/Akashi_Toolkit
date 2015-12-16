@@ -43,7 +43,7 @@ public class page3 extends AppCompatActivity implements NavigationView.OnNavigat
         setSupportActionBar(toolbar);
         setTitle("海域信息");
         ViewPagerItemAdapter adapter = new ViewPagerItemAdapter(ViewPagerItems.with(this)
-                .add("镇守府海域", R.layout.map1)
+                .add("镇守府海域", R.layout.build)
                 .add("南西群岛海域", R.layout.build)
                 .add("北方海域", R.layout.build)
                 .add("西方海域", R.layout.build)

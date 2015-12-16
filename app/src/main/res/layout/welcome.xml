@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="试制 Akashi Toolkit\n 一型甲[内部测试版]"
+        android:text="试制 Akashi Toolkit\n 一型甲改二\n[技术预览版]"
         android:textColor="#FFFFFF"
         android:textSize="30dp" />
     <LinearLayout

@@ -30,6 +30,7 @@
                     tools:text="Title"/>
 
                 <TextView android:id="@+id/subtitle_1"
+                    android:textSize="20dp"
                     style="@style/Material_Card_Subtitle_16dp"
                     tools:text="Subtitle"/>
             </LinearLayout>
