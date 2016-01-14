@@ -202,7 +202,7 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         switch (id) {
-            case  R.id.main:;
+            case  R.id.main:break;
             case  R.id.nav_1:
                     jump(page1.class); finish();break;
             case  R.id.nav_3:
@@ -244,7 +244,7 @@ void jump(Class app){
                 new Thread(JSON2.runnable).start();
             }
         } catch (Exception e) {
-            Snackbar.make(findViewById(R.id.activity_main_swipe_refresh_layout), "似乎没有获取到东西呢~刷新再试试吧~", Snackbar.LENGTH_LONG)
+            Snackbar.make(findViewById(R.id.time_refresh_layout), "似乎没有获取到东西呢~刷新再试试吧~", Snackbar.LENGTH_LONG)
                     .setAction("", null).show();
         }
     }

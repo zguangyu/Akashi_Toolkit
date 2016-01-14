@@ -56,7 +56,7 @@ public class JSONUtil {
             return drawable;
         }
     };
-    static Thread  runnable  = new Thread(new Runnable(){
+     static Thread  runnable  = new Thread(new Runnable(){
         @Override
         public void run() {
             // TODO: http request.

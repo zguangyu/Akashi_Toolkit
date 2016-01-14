@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -54,31 +53,31 @@ public class page4 extends AppCompatActivity implements NavigationView.OnNavigat
     private final static String fileName = "quest.json";
     private ProgressDialog pd;
 
-    public static Handler mHandler = new Handler()
-    {
-        public void handleMessage(Message msg)
-        {
-            if(msg.what == 0)
-            {
-
-                page1.listItemAdapter.notifyDataSetChanged();
-                page1.swipeRefreshLayout.setRefreshing(false);
-            }
-            else if(msg.what == 1)
-            {
-
-
-                page1.listItemAdapter.notifyDataSetChanged();
-                page1.swipeRefreshLayout.setRefreshing(false);
-            } else if(msg.what == 2)
-            {
-                listItem.clear();
-            }else if(msg.what == 3)
-            {
-//                getNullData();
-            }
-        }
-    };
+//    public static Handler mHandler = new Handler()
+//    {
+//        public void handleMessage(Message msg)
+//        {
+//            if(msg.what == 0)
+//            {
+//
+//                page1.listItemAdapter.notifyDataSetChanged();
+//                page1.swipeRefreshLayout.setRefreshing(false);
+//            }
+//            else if(msg.what == 1)
+//            {
+//
+//
+//                page1.listItemAdapter.notifyDataSetChanged();
+//                page1.swipeRefreshLayout.setRefreshing(false);
+//            } else if(msg.what == 2)
+//            {
+//                listItem.clear();
+//            }else if(msg.what == 3)
+//            {
+////                getNullData();
+//            }
+//        }
+//    };
 
     public static String getJSON="";
     public static SwipeRefreshLayout swipeRefreshLayout;

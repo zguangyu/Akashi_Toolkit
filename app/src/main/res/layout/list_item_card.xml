@@ -30,8 +30,8 @@
                 android:padding="2dp">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:id="@+id/image_1"
                     android:contentDescription="@null"
                     android:scaleType="fitStart"
@@ -44,9 +44,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView android:id="@+id/text_3"
-                    android:paddingTop="16dp"
+                    android:paddingTop="10dp"
                     android:paddingBottom="5dp"
-                    android:textSize="12dp"
+                    android:textSize="10dp"
                     android:text="「艦これ」開発/運営"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -57,15 +57,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|left"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp" android:paddingBottom="16dp"
-                    android:textSize="14dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:textSize="12dp"
                     tools:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
                     android:id="@+id/text_1"
                     android:text="#推文内容" />
                 <TextView android:id="@+id/text_2"
                     style="@style/Material_Card_Subtitle_16dp"
-                    android:textSize="12dp"
+                    android:textSize="10dp"
                     android:text="时间戳"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
