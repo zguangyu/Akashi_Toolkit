@@ -12,7 +12,7 @@
     <item index="1011" type="1" period="1" title="第2艦隊で空母機動部隊を編成せよ！" content="在第二舰队中配置轻母/空母/装母1只、驱逐舰3只" awardRanLiao="100" awardDanYao="" awardGang="" awardLv="100" awardOther="高速建造材x2" unlockIndex="2003"></item>
     <item index="1012" type="1" period="1" title="空母機動部隊を編成せよ！" content="旗舰配置轻母/空母/装母1只、驱逐舰3只" awardRanLiao="50" awardDanYao="" awardGang="" awardLv="100" awardOther="開発資材x1" unlockIndex=""></item>
     <item index="1013" type="1" period="1" title="戦艦と重巡による主力艦隊を編成せよ！" content="在配置战舰1只、重巡2只以上" awardRanLiao="" awardDanYao="150" awardGang="" awardLv="" awardOther="高速建造材x2" unlockIndex="1012"></item>
-    <item index="1014" type="1" period="1" title="「川内」型軽巡姉妹の全3艦を編成せよ！" content="将「川内」「神通」「那珂」配置在同一舰队中" awardRanLiao="100" awardDanYao="" awardGang="100" awardLv="" awardOther="第三舰队开放" unlockIndex="1007"></item>
+    <item index="1014" type="1" period="1" title="「川内」型軽巡姉妹の全3艦を    編成せよ！" content="将「川内」「神通」「那珂」配置在同一舰队中" awardRanLiao="100" awardDanYao="" awardGang="100" awardLv="" awardOther="第三舰队开放" unlockIndex="1007"></item>
     <item index="1015" type="1" period="1" title="「妙高」型重巡姉妹の全4隻を編成せよ！" content="将「妙高」「那智」「足柄」「羽黒」配置在同一舰队中" awardRanLiao="150" awardDanYao="100" awardGang="150" awardLv="100" awardOther="高速修復材x1、開発資材x1" unlockIndex="1014"></item>
     <item index="1016" type="1" period="1" title="「金剛」型による高速戦艦部隊を編成せよ！" content="将「金剛」「比叡」「榛名」「霧島」配置在同一舰队中" awardRanLiao="" awardDanYao="" awardGang="" awardLv="" awardOther="第四舰队开放" unlockIndex="1015"></item>
     <item index="1017" type="1" period="1" title="「扶桑」型戦艦姉妹の全2隻を編成せよ！" content="将「扶桑」「山城」配置在同一舰队中" awardRanLiao="200" awardDanYao="200" awardGang="200" awardLv="200" awardOther="高速修復材x2、開発資材x1" unlockIndex="1008"></item>
@@ -142,11 +142,6 @@
     <item index="2305" type="2" period="4" title="海上護衛強化月間" content="击破1-5图BOSS十次并获得A胜以上" awardRanLiao="800" awardDanYao="" awardGang="" awardLv="" awardOther="開発資材x5、改修資材x3" unlockIndex="2301,2021"></item>
     <item index="2306" type="2" period="4" title="「空母機動部隊」西へ！" content="使用空母系2只、驱逐2只（可另加上任意2艘船），击破4-2图BOSS并获得S胜" awardRanLiao="" awardDanYao="" awardGang="600" awardLv="800" awardOther="改修資材x2、家具箱(大)x2" unlockIndex="2204,2020"></item>
     <item index="2307" type="2" period="4" title="「水上反撃部隊」突入せよ！" content="使用驱逐作为旗舰，重巡1只、轻巡1只、驱逐4只，击破2-5图BOSS并获得S胜" awardRanLiao="" awardDanYao="600" awardGang="" awardLv="200" awardOther="開発資材x4、改修資材x2" unlockIndex="1046,2306"></item>
-
-
-
-    <item index="2406" type="2" period="1" title="桃の節句：「菱餅」を集めよう！" content="收集3个「菱餅」" awardDanYao="330" awardGang="330" awardOther="家具箱(大)x1、特注家具職人x1" unlockIndex="2006"></item>
-    <item index="2407" type="2" period="1" title="桃の節句：「菱餅」を沢山集めるのです！" content="收集10个「菱餅」" awardDanYao="880" awardGang="880" awardOther="給糧艦「間宮」x1、水上艦要員熟練見張員" unlockIndex="2406"></item>
 
 
 

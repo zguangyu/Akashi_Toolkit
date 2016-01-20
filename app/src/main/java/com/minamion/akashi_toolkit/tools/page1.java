@@ -63,7 +63,7 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
                 twitterRefreshLayout.post(new Runnable() {
                     @Override
                     public void run() {
-                        twitterRefreshLayout.setRefreshing(true);
+                        twitterRefreshLayout.setRefreshing(false);
                     }
                 });
             } else if(msg.what == 2)
@@ -72,6 +72,12 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
             }else if(msg.what == 3)
             {
                 getNullData();
+                twitterRefreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        twitterRefreshLayout.setRefreshing(false);
+                    }
+                });
             }
         }
     };
@@ -87,7 +93,7 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_three);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar3);
         setSupportActionBar(toolbar);
         setTitle("Twitter转发");//JSON解析+显示//
         twitterRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.twitter_refresh_layout);
@@ -131,12 +137,7 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
                         android.R.color.holo_blue_bright,
                         android.R.color.holo_orange_light,
                         android.R.color.holo_green_light);
-                twitterRefreshLayout.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        twitterRefreshLayout.setRefreshing(true);
-                    }
-                });
+
 
             }
         });
@@ -158,7 +159,7 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
                     // 在这儿放耗时操作的 AsyncTask线程、后台Service等代码。
                     getData();
                     // 刷新完毕.
-
+                    twitterRefreshLayout.setRefreshing(false);
                     // false，刷新完成，因此停止UI的刷新表现样式。
 
                 }
@@ -294,18 +295,18 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
             startActivity(intent);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout3);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     public void getData() {
-//        twitterRefreshLayout.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                twitterRefreshLayout.setRefreshing(true);
-//            }
-//        });
+        twitterRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                twitterRefreshLayout.setRefreshing(true);
+            }
+        });
 
 
         try {

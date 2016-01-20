@@ -68,7 +68,7 @@ public class JSONUtil {
                 readParse("http://t.kcwiki.moe/?json=1&count=30");
             } catch (Exception e) {
                 e.printStackTrace();
-                page1.mHandler.sendEmptyMessage(1);
+                page1.mHandler.sendEmptyMessage(3); //连接异常
             }
             Bitmap bmp = null;
             try {
@@ -97,19 +97,20 @@ public class JSONUtil {
                     JSONTokener jsonTokener2 = new JSONTokener(array.getString(i));
                     JSONObject jsonObject1 = (JSONObject) jsonTokener2.nextValue();
                     HashMap<String, Object> map = new HashMap<String, Object>();
-                    map.put("ItemTitle", Html.fromHtml(jsonObject1.getString("content"), imgGetter, tagHandler));
+                    String content=Html.fromHtml(jsonObject1.getString("content"), imgGetter, tagHandler).toString();
+                    map.put("ItemTitle", content);
                     map.put("Date", jsonObject1.getString("date"));
                     map.put("ID", i); map.put("Img", bmp);
                     page1.listItem.add(map);
                     Log.e("json数组", String.valueOf(map));
 
                 }
-                page1.mHandler.sendEmptyMessage(0);
+                page1.mHandler.sendEmptyMessage(1);
 
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-                page1.mHandler.sendEmptyMessage(1);
+                page1.mHandler.sendEmptyMessage(3);
 
             }
 

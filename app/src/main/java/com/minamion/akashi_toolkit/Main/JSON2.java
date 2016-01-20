@@ -47,6 +47,7 @@ public class JSON2 {
                 try{
                     String str = jsonObject2.getString("*");
                      result = str.substring(0, str.indexOf("<br"));
+
                 }catch  (Exception e) {
                      result = jsonObject2.getString("*");
                 }
@@ -54,7 +55,8 @@ public class JSON2 {
 
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("ItemTitle", "游戏维护通知:");
-                map.put("Text",  Html.fromHtml(result+"</p>"));
+                String content=Html.fromHtml(result+"</p>").toString().replace('\n', ' ').replace('\t', ' ').replace('\r', ' ');
+                map.put("Text", content);
                 Main.listItem.add(map);
                 Log.e("json数组map1显示", String.valueOf(map));
             } catch (Exception e) {
@@ -81,9 +83,11 @@ public class JSON2 {
                 //获取一个json数组
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("ItemTitle", "开放注册通知:");
-                map.put("Text", Html.fromHtml(jsonObject2.getString("*")));
+               String a= Html.fromHtml(jsonObject2.getString("*")).toString().replace('\n', ' ').replace('\t', ' ').replace('\r', ' ');
+                map.put("Text",a);
                 Main.listItem.add(map);
-                Log.e("json数组map2显示", String.valueOf(map));
+                String content= String.valueOf(map).replace('\n', ' ');
+                Log.e("json数组map2显示",content);
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

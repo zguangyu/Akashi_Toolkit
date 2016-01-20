@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dots="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="?attr/colorPrimary"
-    android:gravity="center"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:gravity="center|center_horizontal">
 
     <ImageView
         android:layout_width="@android:dimen/thumbnail_height"
         android:layout_height="@android:dimen/thumbnail_width"
         android:layout_gravity="center"
-        android:src="@mipmap/logo" />
+        android:src="@mipmap/logo"
+        android:layout_marginTop="50dp" />
 
     <TextView
-        android:id="@+id/welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="试制 Akashi Toolkit\n 一型甲改二\n[技术预览版]"
-        android:textColor="#FFFFFF"
-        android:textSize="30dp" />
+    android:id="@+id/welcome"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="试制 Akashi Toolkit\n 一型甲改二"
+    android:textColor="#FFFFFF"
+    android:textSize="20dp"
+        android:layout_marginTop="20dp" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
         android:layout_gravity="center">
         <pl.tajchert.sample.DotsTextView
             android:text="加载中"
@@ -37,7 +39,27 @@
             android:textColor="?attr/icon"
             dots:autoplay="false"
             dots:period="1000"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="90dp"
+        android:layout_gravity="bottom|center_horizontal">
+
+        <TextView
+            android:id="@+id/welcome2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="0.1.2[技术预览版]"
+            android:textColor="#FFFFFF"
+            android:textSize="14dp" />
     </LinearLayout>
 
 </LinearLayout>

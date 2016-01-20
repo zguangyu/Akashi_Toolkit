@@ -51,6 +51,7 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
             if(msg.what == 0)
             {
                 Main.listItemAdapter.notifyDataSetChanged();
+                Main.time_refresh_layout.setRefreshing(false);
             }
             else if(msg.what == 1)
             {
@@ -135,6 +136,8 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
         });
 
         thread.start();
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -204,7 +207,7 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
         switch (id) {
             case  R.id.main:break;
             case  R.id.nav_1:
-                    jump(page1.class); finish();break;
+                jump(page1.class); finish();break;
             case  R.id.nav_3:
                 jump(page3.class); finish();break;
             case  R.id.nav_4:
@@ -223,20 +226,20 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-void jump(Class app){
-    Intent intent = new Intent(Main.this,app);
-    startActivity(intent);
+    void jump(Class app){
+        Intent intent = new Intent(Main.this,app);
+        startActivity(intent);
 
-}
+    }
     public void getGameData() {
         try {
             //获取
-//            time_refresh_layout.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    time_refresh_layout.setRefreshing(true);
-//                }
-//            });
+            time_refresh_layout.post(new Runnable() {
+                @Override
+                public void run() {
+                    time_refresh_layout.setRefreshing(true);
+                }
+            });
             listItem.clear();
             try {
                 JSON2.runnable.start();
