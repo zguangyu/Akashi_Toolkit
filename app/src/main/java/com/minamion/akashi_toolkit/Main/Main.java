@@ -33,6 +33,7 @@ import com.minamion.akashi_toolkit.tools.page3;
 import com.minamion.akashi_toolkit.tools.page4;
 import com.minamion.akashi_toolkit.tools.page5;
 import com.minamion.akashi_toolkit.tools.page6;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,10 +41,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Main extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    public static String getJSON = "";
     static ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
     private static SwipeRefreshLayout time_refresh_layout;
     private static SimpleAdapter listItemAdapter;
-    ListView listview_update;
     static Handler mHandler = new Handler()
     {
         public void handleMessage(Message msg)
@@ -67,12 +68,26 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
             }
         }
     };
+    /**
+     * 双击退出函数
+     */
+    private static Boolean isExit = false;
+    ListView listview_update;
+
     public static void getNullData() {
         Snackbar.make(time_refresh_layout, "似乎没有获取到东西呢~刷新再试试吧~", Snackbar.LENGTH_LONG)
                 .setAction("", null).show();
     }
-    public static String getJSON="";
 
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +163,6 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-
     private LayoutAnimationController getListAnim() {
         AnimationSet set = new AnimationSet(true);
         Animation animation = new AlphaAnimation(0.0f, 1.0f);
@@ -164,8 +178,6 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
                 set, 0.5f);
         return controller;
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -226,11 +238,13 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     void jump(Class app){
         Intent intent = new Intent(Main.this,app);
         startActivity(intent);
 
     }
+
     public void getGameData() {
         try {
             //获取
@@ -251,22 +265,18 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
                     .setAction("", null).show();
         }
     }
+
     /**
      * 菜单、返回键响应
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
-        if(keyCode == KeyEvent.KEYCODE_BACK)
-        {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             exitBy2Click();      //调用双击退出函数
         }
         return false;
     }
-    /**
-     * 双击退出函数
-     */
-    private static Boolean isExit = false;
 
     private void exitBy2Click() {
         Timer tExit = null;

@@ -12,6 +12,7 @@ import com.minamion.akashi_toolkit.Main.Main;
 import com.minamion.akashi_toolkit.R;
 import com.minamion.akashi_toolkit.tools.ParserQuest;
 import com.minamion.akashi_toolkit.tools.Quest;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.InputStream;
 import java.util.List;
@@ -23,6 +24,16 @@ import pl.tajchert.sample.DotsTextView;
  */
 public class Welcome extends AppCompatActivity {
     private DotsTextView dots;
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

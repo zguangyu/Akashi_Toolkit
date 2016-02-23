@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.minamion.akashi_toolkit.Main.Main;
 import com.minamion.akashi_toolkit.R;
 import com.minamion.akashi_toolkit.Update.Aboutapp;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +40,11 @@ import java.util.TimerTask;
 
 
 public class page1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    public static String getJSON = "";
+    public static ListView listview_twitter;
+    public static ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
     private static SwipeRefreshLayout twitterRefreshLayout;
+    private static SimpleAdapter listItemAdapter2;
     static Handler mHandler = new Handler()
     {
         public void handleMessage(Message msg)
@@ -81,12 +86,25 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
             }
         }
     };
+    /**
+     * 双击退出函数
+     */
+    private static Boolean isExit = false;
 
-    public static String getJSON="";
-    private static SimpleAdapter listItemAdapter2;
-    public static ListView listview_twitter;
-    public static ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
+    public static void getNullData() {
+        Snackbar.make(twitterRefreshLayout, "似乎没有获取到东西呢~刷新再试试吧~", Snackbar.LENGTH_LONG)
+                .setAction("", null).show();
+    }
 
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +113,7 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
         setContentView(R.layout.activity_three);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar3);
         setSupportActionBar(toolbar);
-        setTitle("Twitter转发");//JSON解析+显示//
+        setTitle("「艦これ」開発/運営 ");//JSON解析+显示//
         twitterRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.twitter_refresh_layout);
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -178,6 +196,7 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view3);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
     private LayoutAnimationController getListAnim() {
         AnimationSet set = new AnimationSet(true);
         Animation animation = new AlphaAnimation(0.0f, 1.0f);
@@ -193,9 +212,6 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
                 set, 0.5f);
         return controller;
     }
-
-
-
 
     @Override
     public void onBackPressed() {
@@ -228,22 +244,18 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
 
         return super.onOptionsItemSelected(item);
     }
+
     /**
      * 菜单、返回键响应
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
-        if(keyCode == KeyEvent.KEYCODE_BACK)
-        {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             exitBy2Click();      //调用双击退出函数
         }
         return false;
     }
-    /**
-     * 双击退出函数
-     */
-    private static Boolean isExit = false;
 
     private void exitBy2Click() {
         Timer tExit = null;
@@ -263,6 +275,7 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
             System.exit(0);
         }
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -329,10 +342,5 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
                 twitterRefreshLayout.setRefreshing(false);
             }
         });
-    }
-
-    public static void getNullData() {
-        Snackbar.make(twitterRefreshLayout, "似乎没有获取到东西呢~刷新再试试吧~", Snackbar.LENGTH_LONG)
-                .setAction("", null).show();
     }
 }
