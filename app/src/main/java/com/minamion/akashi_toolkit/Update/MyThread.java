@@ -12,7 +12,7 @@ public class MyThread implements Runnable{
 
         ParseXmlService service = new ParseXmlService();
         try {
-            String path = "http://www.minamion.com/kcwiki/index.php";
+            String path = "http://www.minamion.com/Akashi/info.php";
             URL url = new URL(path);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(5 * 1000);

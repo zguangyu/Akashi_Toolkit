@@ -28,11 +28,6 @@ import java.net.URL;
 import java.util.HashMap;
 
 public class UpdateManager {
-    int versionCode = 0;
-    String versionName = "";
-    int serviceCode = 0;
-    String serviceName = "";
-    String change = "";
     /* 下载中 */
     private static final int DOWNLOAD = 1;
     /*获取版本号 */
@@ -41,6 +36,11 @@ public class UpdateManager {
     private static final int DOWNLOAD_FINISH = 2;
     /* 保存解析的XML信息 */
     public static HashMap<String, String> mHashMap;
+    int versionCode = 0;
+    String versionName = "";
+    int serviceCode = 0;
+    String serviceName = "";
+    String change = "";
     /* 下载保存路径 */
     private String mSavePath;
     /* 记录进度条数量 */
@@ -66,7 +66,7 @@ public class UpdateManager {
                 default:
                     break;
             }
-        };
+        }
     };
     private Handler uHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -80,7 +80,6 @@ public class UpdateManager {
             }
         }
 
-        ;
     };
 
     public UpdateManager(Context context) {
@@ -108,6 +107,11 @@ public class UpdateManager {
     public String checkserver_ver() {
         isUpdate();
         return  serviceName+"("+ serviceCode+")";
+    }
+
+    public String getchangelog() {
+        isUpdate();
+        return change;
     }
     /**
      * 检查软件是否有更新版本
@@ -192,6 +196,21 @@ public class UpdateManager {
         new downloadApkThread().start();
     }
 
+    /**
+     * 安装APK文件
+     */
+    private void installApk() {
+        File apkfile = new File(mSavePath, mHashMap.get("name") + ".apk");
+        if (!apkfile.exists()) {
+            return;
+        }
+        // 通过Intent安装APK文件
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        Toast.makeText(mContext, "开始安装更新", Toast.LENGTH_LONG).show();
+        i.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(i);
+    }
 
     /**
      * 下载文件线程
@@ -250,23 +269,5 @@ public class UpdateManager {
             // 取消下载对话框显示
             mDownloadDialog.dismiss();
         }
-    }
-
-    ;
-
-    /**
-     * 安装APK文件
-     */
-    private void installApk() {
-        File apkfile = new File(mSavePath, mHashMap.get("name") + ".apk");
-        if (!apkfile.exists()) {
-            return;
-        }
-        // 通过Intent安装APK文件
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        Toast.makeText(mContext, "开始安装更新", Toast.LENGTH_LONG).show();
-        i.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(i);
     }
 }

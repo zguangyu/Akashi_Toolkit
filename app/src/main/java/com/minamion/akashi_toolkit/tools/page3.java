@@ -27,10 +27,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class page3 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    /**
+     * 双击退出函数
+     */
+    private static Boolean isExit = false;
+
     public void click(View v){
-        Snackbar.make(v, "笨蛋~~才沒有什么付费DLC呢~这些功能后续版本都会解锁的说~~", Snackbar.LENGTH_LONG)
+        Snackbar.make(v, "哼~南音酱辣么萌居然忍心催更！", Snackbar.LENGTH_LONG)
                 .setAction("~", null).show();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +45,7 @@ public class page3 extends AppCompatActivity implements NavigationView.OnNavigat
         //动态数组
         String[] str = new String[]{"Img", "mapname"};
         //ImageItem的XML文件里面的两个TextView ID
-        int[] id =new int[]{R.id.image_2, R.id.title_2};
+        int[] id = new int[]{R.id.image_2, R.id.title_2};
         setSupportActionBar(toolbar);
         setTitle("海域信息");
         ViewPagerItemAdapter adapter = new ViewPagerItemAdapter(ViewPagerItems.with(this)
@@ -50,7 +56,6 @@ public class page3 extends AppCompatActivity implements NavigationView.OnNavigat
                 .add("南方海域", R.layout.build)
                 .add("中部海域", R.layout.build)
                 .create());
-
 
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -68,6 +73,7 @@ public class page3 extends AppCompatActivity implements NavigationView.OnNavigat
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -85,6 +91,12 @@ public class page3 extends AppCompatActivity implements NavigationView.OnNavigat
         return true;
     }
 
+    void jump(Class app) {
+        Intent intent = new Intent(page3.this, app);
+        startActivity(intent);
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -94,6 +106,8 @@ public class page3 extends AppCompatActivity implements NavigationView.OnNavigat
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            jump(Aboutapp.class);
             return true;
         }
 
@@ -127,7 +141,7 @@ public class page3 extends AppCompatActivity implements NavigationView.OnNavigat
             Intent intent = new Intent(page3.this, page6.class);
             startActivity(intent);
             finish();
-        }else if (id == R.id.nav_info) {
+        } else if (id == R.id.nav_info) {
             Intent intent = new Intent(page3.this, Aboutapp.class);
             startActivity(intent);
         }
@@ -136,22 +150,18 @@ public class page3 extends AppCompatActivity implements NavigationView.OnNavigat
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     /**
      * 菜单、返回键响应
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
-        if(keyCode == KeyEvent.KEYCODE_BACK)
-        {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             exitBy2Click();      //调用双击退出函数
         }
         return false;
     }
-    /**
-     * 双击退出函数
-     */
-    private static Boolean isExit = false;
 
     private void exitBy2Click() {
         Timer tExit = null;
