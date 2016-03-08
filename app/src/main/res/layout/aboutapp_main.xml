@@ -10,14 +10,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/Aboutapp_main">
+    tools:context=".MainActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp">
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal">
         <ImageView
             android:layout_width="@android:dimen/thumbnail_height"
             android:layout_height="@android:dimen/thumbnail_width"
@@ -26,55 +25,91 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="vertical">
             <TextView
-                android:textSize="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Akashi Toolkit" />
+                android:text="Akashi Toolkit"
+                android:textSize="30dp" />
             <TextView
                 android:id="@+id/local_v"
-                android:textSize="14dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="当前版本号:" />
+                android:text="当前版本号:"
+                android:textSize="14dp" />
             <TextView
                 android:id="@+id/server_v"
-                android:textSize="14dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="最新版本号:未知" />
+                android:text="最新版本号:"
+                android:textSize="14dp" />
 
         </LinearLayout>
     </LinearLayout>
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:autoLink="all"
-    android:text="@string/about"
-    android:textSize="12dp"
-    android:layout_gravity="center_horizontal"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp" />
+
     <TextView
+        android:id="@+id/changelog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:autoLink="all"
-        android:text="@string/about2"
-        android:textSize="12dp"
-        android:layout_gravity="center_horizontal"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp" />
+        android:text="更新内容：:"
+        android:textSize="14dp" />
+<TextView
+    android:id="@+id/about"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:autoLink="all"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:text="@string/about"
+    android:textSize="12dp" />
+
     <com.dd.CircularProgressButton
         android:id="@+id/btnWithText"
         android:layout_width="196dp"
         android:layout_height="64dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
         android:textColor="?attr/icon"
-        app:cpb_textIdle="检查更新"
+        android:textSize="18sp"
         app:cpb_textComplete="已是最新版本"
         app:cpb_textError="有可用更新"
+        app:cpb_textIdle="检查更新" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/kcwiki"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/logo2"
+            android:foreground="?android:attr/selectableItemBackground" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="all"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="感谢kcwiki开发组的大力支持及相关资源的提供\n（点击图标可跳转至kcwiki舰娘百科）"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+    <com.dd.CircularProgressButton
+        android:id="@+id/donate"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:textColor="?attr/icon"
         android:textSize="18sp"
-        android:layout_gravity="center_horizontal" />
+        app:cpb_textIdle="donate" />
 </LinearLayout>

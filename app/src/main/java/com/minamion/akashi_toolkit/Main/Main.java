@@ -114,7 +114,7 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
                 listview_update.setAdapter(listItemAdapter);
                 listview_update.setLayoutAnimation(getListAnim());
                 listview_update.setAdapter(listItemAdapter);
-                getGameData();
+
                 time_refresh_layout = (SwipeRefreshLayout) findViewById(R.id.time_refresh_layout);
                 time_refresh_layout.setColorSchemeResources(
                         android.R.color.holo_blue_bright,
@@ -126,7 +126,7 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
                         time_refresh_layout.setRefreshing(true);
                     }
                 });
-
+                getGameData();
 
 
                 time_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -136,7 +136,8 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
                     @Override
                     public void onRefresh() {
                         Log.e("主线程", "刷新启动");
-                        time_refresh_layout.setRefreshing(true);
+
+//                        time_refresh_layout.setRefreshing(true);
 
                         // 开始启动刷新...
                         // 在这儿放耗时操作的 AsyncTask线程、后台Service等代码。
@@ -205,6 +206,7 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            jump(Aboutapp.class);
             return true;
         }
 
@@ -263,6 +265,12 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
         } catch (Exception e) {
             Snackbar.make(findViewById(R.id.time_refresh_layout), "似乎没有获取到东西呢~刷新再试试吧~", Snackbar.LENGTH_LONG)
                     .setAction("", null).show();
+            time_refresh_layout.post(new Runnable() {
+                @Override
+                public void run() {
+                    time_refresh_layout.setRefreshing(false);
+                }
+            });
         }
     }
 

@@ -2,7 +2,6 @@ package com.minamion.akashi_toolkit.tools;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -13,7 +12,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +21,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -43,17 +40,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class page4 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    public void click(View v){
-        Snackbar.make(v, "笨蛋~~才沒有什么付费DLC呢~这些功能后续版本都会解锁的说~~", Snackbar.LENGTH_LONG)
-                .setAction("~", null).show();
-    }
-
-    private List<Map<String, String>> data;
-    private ProgressDialog pd;
-
     public static String getJSON="";
     public static SwipeRefreshLayout swipeRefreshLayout;
     public static SimpleAdapter listItemAdapter;
+    public static ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
     static ListView quest1;
     static ListView quest2;
     static ListView quest3;
@@ -61,14 +51,6 @@ public class page4 extends AppCompatActivity implements NavigationView.OnNavigat
     static ListView quest5;
     static ListView quest6;
     static ListView quest7;
-    private static SimpleAdapter listItemAdapter1;
-    private static SimpleAdapter listItemAdapter2;
-    private static SimpleAdapter listItemAdapter3;
-    private static SimpleAdapter listItemAdapter4;
-    private static SimpleAdapter listItemAdapter5;
-    private static SimpleAdapter listItemAdapter6;
-    private static SimpleAdapter listItemAdapter7;
-
     static ArrayList<HashMap<String, Object>> listItem1 = new ArrayList<HashMap<String, Object>>();
     static ArrayList<HashMap<String, Object>> listItem2 = new ArrayList<HashMap<String, Object>>();
     static ArrayList<HashMap<String, Object>> listItem3 = new ArrayList<HashMap<String, Object>>();
@@ -76,10 +58,24 @@ public class page4 extends AppCompatActivity implements NavigationView.OnNavigat
     static ArrayList<HashMap<String, Object>> listItem5 = new ArrayList<HashMap<String, Object>>();
     static ArrayList<HashMap<String, Object>> listItem6 = new ArrayList<HashMap<String, Object>>();
     static ArrayList<HashMap<String, Object>> listItem7 = new ArrayList<HashMap<String, Object>>();
+    private static SimpleAdapter listItemAdapter1;
+    private static SimpleAdapter listItemAdapter2;
+    private static SimpleAdapter listItemAdapter3;
+    private static SimpleAdapter listItemAdapter4;
+    private static SimpleAdapter listItemAdapter5;
+    private static SimpleAdapter listItemAdapter6;
+    private static SimpleAdapter listItemAdapter7;
+    /**
+     * 双击退出函数
+     */
+    private static Boolean isExit = false;
+    private List<Map<String, String>> data;
+    private ProgressDialog pd;
 
-    public static ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
-
-
+    public void click(View v) {
+        Snackbar.make(v, "笨蛋~~才沒有什么付费DLC呢~这些功能后续版本都会解锁的说~~", Snackbar.LENGTH_LONG)
+                .setAction("~", null).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,13 +85,13 @@ public class page4 extends AppCompatActivity implements NavigationView.OnNavigat
         setSupportActionBar(toolbar);
         setTitle("任务");
         ViewPagerItemAdapter adapter = new ViewPagerItemAdapter(ViewPagerItems.with(this)
-                .add("編成", R.layout.quest_card1)
-                .add("出擊", R.layout.quest2)
-                .add("演習", R.layout.quest3)
-                .add("遠征", R.layout.quest4)
-                .add("補給/入渠", R.layout.quest5)
-                .add("工廠", R.layout.quest6)
-                .add("改裝", R.layout.quest7)
+                .add("編成", R.layout.build)
+                .add("出擊", R.layout.build)
+                .add("演習", R.layout.build)
+                .add("遠征", R.layout.build)
+                .add("補給/入渠", R.layout.build)
+                .add("工廠", R.layout.build)
+                .add("改裝", R.layout.build)
                 .create());
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
@@ -113,201 +109,202 @@ public class page4 extends AppCompatActivity implements NavigationView.OnNavigat
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-                quest1 = (ListView) findViewById(R.id.quest1);
-                quest2 = (ListView) findViewById(R.id.quest2);
-                quest3 = (ListView) findViewById(R.id.quest3);
-                quest4 = (ListView) findViewById(R.id.quest4);
-                quest5 = (ListView) findViewById(R.id.quest5);
-                quest6 = (ListView) findViewById(R.id.quest6);
-                quest7 = (ListView) findViewById(R.id.quest7);
-                Log.e("PAGE4 任务解析", listItem1.toString());
-                Log.e("PAGE4 任务解析", listItem2.toString());
-                Log.e("PAGE4 任务解析", listItem3.toString());
-                Log.e("PAGE4 任务解析", listItem4.toString());
-                Log.e("PAGE4 任务解析", listItem5.toString());
-                Log.e("PAGE4 任务解析", listItem6.toString());
-                Log.e("PAGE4 任务解析", listItem7.toString());
-
-
-                listItemAdapter1 = new SimpleAdapter(page4.this, listItem1,//数据源
-                        R.layout.quest_card1,//ListItem的XML实现
-                        //动态数组
-                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
-                        //ImageItem的XML文件里面的两个TextView ID
-                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
-
-
-                listItemAdapter2 = new SimpleAdapter(page4.this, listItem2,//数据源
-                        R.layout.quest_card2,//ListItem的XML实现
-                        //动态数组
-                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
-                        //ImageItem的XML文件里面的两个TextView ID
-                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
-
-
-                listItemAdapter3 = new SimpleAdapter(page4.this, listItem3,//数据源
-                        R.layout.quest_card3,//ListItem的XML实现
-                        //动态数组
-                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
-                        //ImageItem的XML文件里面的两个TextView ID
-                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
-
-
-                listItemAdapter4 = new SimpleAdapter(page4.this, listItem4,//数据源
-                        R.layout.quest_card1,//ListItem的XML实现
-                        //动态数组
-                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
-                        //ImageItem的XML文件里面的两个TextView ID
-                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
-
-
-                listItemAdapter5 = new SimpleAdapter(page4.this, listItem5,//数据源
-                        R.layout.quest_card5,//ListItem的XML实现
-                        //动态数组
-                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
-                        //ImageItem的XML文件里面的两个TextView ID
-                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
-
-
-                listItemAdapter6 = new SimpleAdapter(page4.this, listItem6,//数据源
-                        R.layout.quest_card6,//ListItem的XML实现
-                        //动态数组
-                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
-                        //ImageItem的XML文件里面的两个TextView ID
-                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
-
-
-                listItemAdapter7 = new SimpleAdapter(page4.this, listItem7,//数据源
-                        R.layout.quest_card7,//ListItem的XML实现
-                        //动态数组
-                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
-                        //ImageItem的XML文件里面的两个TextView ID
-                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
-
-
-        listItemAdapter1.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object data, String textRepresentation) {
-                //判断是否为我们要处理的对象
-                if (view instanceof ImageView && data instanceof Bitmap) {
-                    ImageView iv = (ImageView) view;
-                    iv.setImageBitmap((Bitmap) data);
-                    return true;
-                } else
-                    return false;
-            }
-        });
-        listItemAdapter1.setViewBinder(new MyViewBinder());
-
-        listItemAdapter2.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object data, String textRepresentation) {
-                //判断是否为我们要处理的对象
-                if (view instanceof ImageView && data instanceof Bitmap) {
-                    ImageView iv = (ImageView) view;
-                    iv.setImageBitmap((Bitmap) data);
-                    return true;
-                } else
-                    return false;
-            }
-        });
-        listItemAdapter2.setViewBinder(new MyViewBinder());
-
-        listItemAdapter3.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object data, String textRepresentation) {
-                //判断是否为我们要处理的对象
-                if (view instanceof ImageView && data instanceof Bitmap) {
-                    ImageView iv = (ImageView) view;
-                    iv.setImageBitmap((Bitmap) data);
-                    return true;
-                } else
-                    return false;
-            }
-        });
-        listItemAdapter3.setViewBinder(new MyViewBinder());
-
-        listItemAdapter4.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object data, String textRepresentation) {
-                //判断是否为我们要处理的对象
-                if (view instanceof ImageView && data instanceof Bitmap) {
-                    ImageView iv = (ImageView) view;
-                    iv.setImageBitmap((Bitmap) data);
-                    return true;
-                } else
-                    return false;
-            }
-        });
-        listItemAdapter4.setViewBinder(new MyViewBinder());
-
-        listItemAdapter5.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object data, String textRepresentation) {
-                //判断是否为我们要处理的对象
-                if (view instanceof ImageView && data instanceof Bitmap) {
-                    ImageView iv = (ImageView) view;
-                    iv.setImageBitmap((Bitmap) data);
-                    return true;
-                } else
-                    return false;
-            }
-        });
-        listItemAdapter5.setViewBinder(new MyViewBinder());
-
-        listItemAdapter6.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object data, String textRepresentation) {
-                //判断是否为我们要处理的对象
-                if (view instanceof ImageView && data instanceof Bitmap) {
-                    ImageView iv = (ImageView) view;
-                    iv.setImageBitmap((Bitmap) data);
-                    return true;
-                } else
-                    return false;
-            }
-        });
-        listItemAdapter6.setViewBinder(new MyViewBinder());
-
-        listItemAdapter7.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object data, String textRepresentation) {
-                //判断是否为我们要处理的对象
-                if (view instanceof ImageView && data instanceof Bitmap) {
-                    ImageView iv = (ImageView) view;
-                    iv.setImageBitmap((Bitmap) data);
-                    return true;
-                } else
-                    return false;
-            }
-        });
-        listItemAdapter7.setViewBinder(new MyViewBinder());
-
-
-
-                quest1.setAdapter(listItemAdapter1);
-                quest2.setAdapter(listItemAdapter2);
-                quest3.setAdapter(listItemAdapter3);
-                quest4.setAdapter(listItemAdapter4);
-                quest5.setAdapter(listItemAdapter5);
-                quest6.setAdapter(listItemAdapter6);
-                quest7.setAdapter(listItemAdapter7);
-
-
-                quest1.setLayoutAnimation(getListAnim());
-                quest2.setLayoutAnimation(getListAnim());
-                quest3.setLayoutAnimation(getListAnim());
-                quest4.setLayoutAnimation(getListAnim());
-                quest5.setLayoutAnimation(getListAnim());
-                quest6.setLayoutAnimation(getListAnim());
-                quest7.setLayoutAnimation(getListAnim());
-
-
+//
+//                quest1 = (ListView) findViewById(R.id.quest1);
+//                quest2 = (ListView) findViewById(R.id.quest2);
+//                quest3 = (ListView) findViewById(R.id.quest3);
+//                quest4 = (ListView) findViewById(R.id.quest4);
+//                quest5 = (ListView) findViewById(R.id.quest5);
+//                quest6 = (ListView) findViewById(R.id.quest6);
+//                quest7 = (ListView) findViewById(R.id.quest7);
+//                Log.e("PAGE4 任务解析", listItem1.toString());
+//                Log.e("PAGE4 任务解析", listItem2.toString());
+//                Log.e("PAGE4 任务解析", listItem3.toString());
+//                Log.e("PAGE4 任务解析", listItem4.toString());
+//                Log.e("PAGE4 任务解析", listItem5.toString());
+//                Log.e("PAGE4 任务解析", listItem6.toString());
+//                Log.e("PAGE4 任务解析", listItem7.toString());
+//
+//
+//                listItemAdapter1 = new SimpleAdapter(page4.this, listItem1,//数据源
+//                        R.layout.quest_card1,//ListItem的XML实现
+//                        //动态数组
+//                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
+//                        //ImageItem的XML文件里面的两个TextView ID
+//                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
+//
+//
+//                listItemAdapter2 = new SimpleAdapter(page4.this, listItem2,//数据源
+//                        R.layout.quest_card2,//ListItem的XML实现
+//                        //动态数组
+//                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
+//                        //ImageItem的XML文件里面的两个TextView ID
+//                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
+//
+//
+//                listItemAdapter3 = new SimpleAdapter(page4.this, listItem3,//数据源
+//                        R.layout.quest_card3,//ListItem的XML实现
+//                        //动态数组
+//                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
+//                        //ImageItem的XML文件里面的两个TextView ID
+//                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
+//
+//
+//                listItemAdapter4 = new SimpleAdapter(page4.this, listItem4,//数据源
+//                        R.layout.quest_card1,//ListItem的XML实现
+//                        //动态数组
+//                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
+//                        //ImageItem的XML文件里面的两个TextView ID
+//                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
+//
+//
+//                listItemAdapter5 = new SimpleAdapter(page4.this, listItem5,//数据源
+//                        R.layout.quest_card5,//ListItem的XML实现
+//                        //动态数组
+//                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
+//                        //ImageItem的XML文件里面的两个TextView ID
+//                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
+//
+//
+//                listItemAdapter6 = new SimpleAdapter(page4.this, listItem6,//数据源
+//                        R.layout.quest_card6,//ListItem的XML实现
+//                        //动态数组
+//                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
+//                        //ImageItem的XML文件里面的两个TextView ID
+//                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
+//
+//
+//                listItemAdapter7 = new SimpleAdapter(page4.this, listItem7,//数据源
+//                        R.layout.quest_card7,//ListItem的XML实现
+//                        //动态数组
+//                        new String[]{"title", "content", "awardRanLiao", "awardDanYao", "awardGang", "awardLv", "awardOther", "unlockIndex",},
+//                        //ImageItem的XML文件里面的两个TextView ID
+//                        new int[]{R.id.title, R.id.quest_text, R.id.you, R.id.dan, R.id.gang, R.id.lv, R.id.other, R.id.unlock});
+//
+//
+//        listItemAdapter1.setViewBinder(new SimpleAdapter.ViewBinder() {
+//            @Override
+//            public boolean setViewValue(View view, Object data, String textRepresentation) {
+//                //判断是否为我们要处理的对象
+//                if (view instanceof ImageView && data instanceof Bitmap) {
+//                    ImageView iv = (ImageView) view;
+//                    iv.setImageBitmap((Bitmap) data);
+//                    return true;
+//                } else
+//                    return false;
+//            }
+//        });
+//        listItemAdapter1.setViewBinder(new MyViewBinder());
+//
+//        listItemAdapter2.setViewBinder(new SimpleAdapter.ViewBinder() {
+//            @Override
+//            public boolean setViewValue(View view, Object data, String textRepresentation) {
+//                //判断是否为我们要处理的对象
+//                if (view instanceof ImageView && data instanceof Bitmap) {
+//                    ImageView iv = (ImageView) view;
+//                    iv.setImageBitmap((Bitmap) data);
+//                    return true;
+//                } else
+//                    return false;
+//            }
+//        });
+//        listItemAdapter2.setViewBinder(new MyViewBinder());
+//
+//        listItemAdapter3.setViewBinder(new SimpleAdapter.ViewBinder() {
+//            @Override
+//            public boolean setViewValue(View view, Object data, String textRepresentation) {
+//                //判断是否为我们要处理的对象
+//                if (view instanceof ImageView && data instanceof Bitmap) {
+//                    ImageView iv = (ImageView) view;
+//                    iv.setImageBitmap((Bitmap) data);
+//                    return true;
+//                } else
+//                    return false;
+//            }
+//        });
+//        listItemAdapter3.setViewBinder(new MyViewBinder());
+//
+//        listItemAdapter4.setViewBinder(new SimpleAdapter.ViewBinder() {
+//            @Override
+//            public boolean setViewValue(View view, Object data, String textRepresentation) {
+//                //判断是否为我们要处理的对象
+//                if (view instanceof ImageView && data instanceof Bitmap) {
+//                    ImageView iv = (ImageView) view;
+//                    iv.setImageBitmap((Bitmap) data);
+//                    return true;
+//                } else
+//                    return false;
+//            }
+//        });
+//        listItemAdapter4.setViewBinder(new MyViewBinder());
+//
+//        listItemAdapter5.setViewBinder(new SimpleAdapter.ViewBinder() {
+//            @Override
+//            public boolean setViewValue(View view, Object data, String textRepresentation) {
+//                //判断是否为我们要处理的对象
+//                if (view instanceof ImageView && data instanceof Bitmap) {
+//                    ImageView iv = (ImageView) view;
+//                    iv.setImageBitmap((Bitmap) data);
+//                    return true;
+//                } else
+//                    return false;
+//            }
+//        });
+//        listItemAdapter5.setViewBinder(new MyViewBinder());
+//
+//        listItemAdapter6.setViewBinder(new SimpleAdapter.ViewBinder() {
+//            @Override
+//            public boolean setViewValue(View view, Object data, String textRepresentation) {
+//                //判断是否为我们要处理的对象
+//                if (view instanceof ImageView && data instanceof Bitmap) {
+//                    ImageView iv = (ImageView) view;
+//                    iv.setImageBitmap((Bitmap) data);
+//                    return true;
+//                } else
+//                    return false;
+//            }
+//        });
+//        listItemAdapter6.setViewBinder(new MyViewBinder());
+//
+//        listItemAdapter7.setViewBinder(new SimpleAdapter.ViewBinder() {
+//            @Override
+//            public boolean setViewValue(View view, Object data, String textRepresentation) {
+//                //判断是否为我们要处理的对象
+//                if (view instanceof ImageView && data instanceof Bitmap) {
+//                    ImageView iv = (ImageView) view;
+//                    iv.setImageBitmap((Bitmap) data);
+//                    return true;
+//                } else
+//                    return false;
+//            }
+//        });
+//        listItemAdapter7.setViewBinder(new MyViewBinder());
+//
+//
+//
+//                quest1.setAdapter(listItemAdapter1);
+//                quest2.setAdapter(listItemAdapter2);
+//                quest3.setAdapter(listItemAdapter3);
+//                quest4.setAdapter(listItemAdapter4);
+//                quest5.setAdapter(listItemAdapter5);
+//                quest6.setAdapter(listItemAdapter6);
+//                quest7.setAdapter(listItemAdapter7);
+//
+//
+//                quest1.setLayoutAnimation(getListAnim());
+//                quest2.setLayoutAnimation(getListAnim());
+//                quest3.setLayoutAnimation(getListAnim());
+//                quest4.setLayoutAnimation(getListAnim());
+//                quest5.setLayoutAnimation(getListAnim());
+//                quest6.setLayoutAnimation(getListAnim());
+//                quest7.setLayoutAnimation(getListAnim());
+//
+//
 
 
 
     }
+
     private LayoutAnimationController getListAnim() {
         AnimationSet set = new AnimationSet(true);
         Animation animation = new AlphaAnimation(0.0f, 1.0f);
@@ -323,6 +320,7 @@ public class page4 extends AppCompatActivity implements NavigationView.OnNavigat
                 set, 0.5f);
         return controller;
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -340,6 +338,12 @@ public class page4 extends AppCompatActivity implements NavigationView.OnNavigat
         return true;
     }
 
+    void jump(Class app) {
+        Intent intent = new Intent(page4.this, app);
+        startActivity(intent);
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -349,6 +353,7 @@ public class page4 extends AppCompatActivity implements NavigationView.OnNavigat
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            jump(Aboutapp.class);
             return true;
         }
 
@@ -383,7 +388,7 @@ public class page4 extends AppCompatActivity implements NavigationView.OnNavigat
             Intent intent = new Intent(page4.this, page6.class);
             startActivity(intent);
             finish();
-        }else if (id == R.id.nav_info) {
+        } else if (id == R.id.nav_info) {
             Intent intent = new Intent(page4.this, Aboutapp.class);
             startActivity(intent);
         }
@@ -392,22 +397,18 @@ public class page4 extends AppCompatActivity implements NavigationView.OnNavigat
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     /**
      * 菜单、返回键响应
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
-        if(keyCode == KeyEvent.KEYCODE_BACK)
-        {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             exitBy2Click();      //调用双击退出函数
         }
         return false;
     }
-    /**
-     * 双击退出函数
-     */
-    private static Boolean isExit = false;
 
     private void exitBy2Click() {
         Timer tExit = null;

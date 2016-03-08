@@ -28,10 +28,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class page6 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    /**
+     * 双击退出函数
+     */
+    private static Boolean isExit = false;
+
     public void click(View v){
         Snackbar.make(v, "笨蛋~~才沒有什么付费DLC呢~这些功能后续版本都会解锁的说~~", Snackbar.LENGTH_LONG)
                 .setAction("~", null).show();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +70,7 @@ public class page6 extends AppCompatActivity implements NavigationView.OnNavigat
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -81,6 +88,12 @@ public class page6 extends AppCompatActivity implements NavigationView.OnNavigat
         return true;
     }
 
+    void jump(Class app) {
+        Intent intent = new Intent(page6.this, app);
+        startActivity(intent);
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -90,6 +103,7 @@ public class page6 extends AppCompatActivity implements NavigationView.OnNavigat
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            jump(Aboutapp.class);
             return true;
         }
 
@@ -123,7 +137,7 @@ public class page6 extends AppCompatActivity implements NavigationView.OnNavigat
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_6) {
-        }else if (id == R.id.nav_info) {
+        } else if (id == R.id.nav_info) {
             Intent intent = new Intent(page6.this, Aboutapp.class);
             startActivity(intent);
         }
@@ -132,22 +146,18 @@ public class page6 extends AppCompatActivity implements NavigationView.OnNavigat
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     /**
      * 菜单、返回键响应
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
-        if(keyCode == KeyEvent.KEYCODE_BACK)
-        {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             exitBy2Click();      //调用双击退出函数
         }
         return false;
     }
-    /**
-     * 双击退出函数
-     */
-    private static Boolean isExit = false;
 
     private void exitBy2Click() {
         Timer tExit = null;

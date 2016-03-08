@@ -239,12 +239,18 @@ public class page1 extends AppCompatActivity implements NavigationView.OnNavigat
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            jump(Aboutapp.class);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    void jump(Class app) {
+        Intent intent = new Intent(page1.this, app);
+        startActivity(intent);
+
+    }
     /**
      * 菜单、返回键响应
      */

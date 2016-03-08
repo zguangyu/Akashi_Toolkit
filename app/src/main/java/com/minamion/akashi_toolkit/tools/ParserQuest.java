@@ -61,8 +61,7 @@ public class ParserQuest {
                         map.put("unlockIndex", parser.getAttributeValue(10));
 
 
-
-                        Log.e("XML解析", map.toString());
+//                        Log.e("XML解析", map.toString());
                         switch (Integer.parseInt(parser.getAttributeValue(1))){
                             case 1:page4.listItem1.add(map);break;//編成
                             case 2:page4.listItem2.add(map);break;//出擊
